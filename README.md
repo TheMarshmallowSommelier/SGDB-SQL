@@ -8,7 +8,7 @@ La base de données est créée et gérée grâce à Flyway. Les données sont g
 
 ## Installation
 * Installer mysql via WAMP, docker ou autres
-* Cloner le projet : git clone https://github.com/votre_nom/projet_bd.git
+* Cloner le projet
 * Installer Java (si ce n'est pas déjà fait) : https://www.java.com/fr/download/
 * Installer Flyway : https://flywaydb.org/documentation/getstarted/firststeps/installation
 * Installer les dépendances de Faker.js : 
