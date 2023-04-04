@@ -15,7 +15,7 @@ La base de données est créée et gérée grâce à Flyway. Les données sont g
     $ cd Faker.js && npm install
 
 ## Utilisation
-* Créer la base de données et les tables : 
+* Créer la base de données, tables, insérere les données, procédures et vues : 
 $ cd Flyway && flyway migrate
 * Générer les données aléatoires et les insérer dans la base de données : 
 $ cd ../Faker.js && node seed.js
