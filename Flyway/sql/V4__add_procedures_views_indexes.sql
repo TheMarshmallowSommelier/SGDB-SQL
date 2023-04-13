@@ -23,6 +23,32 @@ JOIN Film_Genre fg ON f.id = fg.film_id
 JOIN Genre g ON fg.genre_id = g.id
 GROUP BY f.id, f.titre, f.date_sortie, f.duree_minutes, r.nom, r.prenom;
 
+-- Ajout de la vue des films avec leur réalisateur et leur acteur principal
+CREATE OR REPLACE VIEW films_realisateur_acteur_principal AS
+SELECT f.titre, CONCAT(r.prenom, ' ', r.nom) AS realisateur, ap.nom AS acteur_principal
+FROM Film f
+JOIN Realisateur r ON f.realisateur_id = r.id
+LEFT JOIN (
+  SELECT fa.film_id, a.nom
+  FROM Film_Acteur fa
+  JOIN Acteur a ON fa.acteur_id = a.id
+  WHERE fa.role = 'PRINCIPAL'
+) ap ON f.id = ap.film_id;
+
+-- Ajout de la vue des films avec leur note moyenne et le nombre de notes 
+CREATE OR REPLACE VIEW utilisateurs_commentaires AS
+SELECT u.nom, u.prenom, COUNT(*) AS nombre_commentaires
+FROM Utilisateur u
+JOIN Commentaire c ON u.id = c.utilisateur_id
+GROUP BY u.id;
+
+-- Ajout de la vue vue des utilisateurs avec le nombre de commentaires qu'ils ont laissé
+CREATE OR REPLACE VIEW films_notes_moyennes AS
+SELECT f.titre, AVG(n.valeur) AS note_moyenne, COUNT(*) AS nombre_notes
+FROM Film f
+JOIN Note n ON f.id = n.film_id
+GROUP BY f.id;
+
 -- Ajout de la procédure stockée pour calculer le nombre d'acteurs et de réalisateurs
 DELIMITER //
 CREATE PROCEDURE total_acteurs_realisateurs (OUT total_acteurs INT, OUT total_realisateurs INT)
